@@ -247,10 +247,11 @@ function updateCartUI() {
 
   itemsEl.innerHTML = cart.map(item => `
     <div class="cart-item">
-      <div class="cart-item-emoji">${item.emoji}</div>
+      <img class="cart-item-img" src="${getProductImage(item.id)}" alt="${item.name}" />
       <div class="cart-item-info">
         <div class="cart-item-name">${item.name}</div>
-        <div class="cart-item-price">₦${formatPrice(item.price)} each</div>
+        <div class="cart-item-price">₦${formatPrice(item.price)} each · Qty: ${item.qty}</div>
+        <div class="cart-item-subtotal">Subtotal: ₦${formatPrice(item.price * item.qty)}</div>
         <div class="cart-item-qty">
           <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
           <span class="qty-display">${item.qty}</span>
