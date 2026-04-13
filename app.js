@@ -126,7 +126,7 @@ function renderProducts(category = 'all') {
           <div class="product-desc">${p.desc}</div>
           <div class="product-footer">
             <div class="product-price"><span class="naira">₦</span>${formatPrice(p.price)}</div>
-            <button class="add-to-cart" onclick="event.stopPropagation(); addToCart(${p.id})">+ Add</button>
+            <button class="add-to-cart" onclick="handleAddToCart(event, ${p.id})">+ Add</button>
           </div>
         </div>
       </div>
@@ -163,6 +163,13 @@ function formatPrice(n) {
 
 
 // ===== CART =====
+function handleAddToCart(event, id) {
+  if (event && typeof event.stopPropagation === 'function') {
+    event.stopPropagation();
+  }
+  addToCart(id);
+}
+
 function addToCart(id) {
   const product = PRODUCTS.find(p => p.id === id);
   if (!product) return;
@@ -217,7 +224,8 @@ function updateCartUI() {
   const total = cart.reduce((s, i) => s + (i.price * i.qty), 0);
 
   // Count badge
-  document.getElementById('cartCount').textContent = count;
+  const countEl = document.getElementById('cartCount');
+  if (countEl) countEl.textContent = count;
 
   // Cart items
   const itemsEl = document.getElementById('cartItems');
@@ -507,7 +515,7 @@ function renderFeaturedProducts() {
           <div class="product-desc">${p.desc}</div>
           <div class="product-footer">
             <div class="product-price"><span class="naira">₦</span>${formatPrice(p.price)}</div>
-            <button class="add-to-cart" onclick="event.stopPropagation(); addToCart(${p.id})">+ Add</button>
+            <button class="add-to-cart" onclick="handleAddToCart(event, ${p.id})">+ Add</button>
           </div>
         </div>
       </div>
@@ -547,7 +555,7 @@ function renderShopProducts(category = 'all') {
           <div class="product-desc">${p.desc}</div>
           <div class="product-footer">
             <div class="product-price"><span class="naira">₦</span>${formatPrice(p.price)}</div>
-            <button class="add-to-cart" onclick="event.stopPropagation(); addToCart(${p.id})">+ Add</button>
+            <button class="add-to-cart" onclick="handleAddToCart(event, ${p.id})">+ Add</button>
           </div>
         </div>
       </div>
