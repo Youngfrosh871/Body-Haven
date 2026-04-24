@@ -238,6 +238,10 @@ function updateCartUI() {
   const footerEl = document.getElementById('cartFooter');
   const totalEl = document.getElementById('cartTotal');
 
+  if (!itemsEl || !emptyEl || !footerEl || !totalEl) {
+    return;
+  }
+
   if (cart.length === 0) {
     emptyEl.style.display = 'flex';
     footerEl.style.display = 'none';
@@ -270,20 +274,35 @@ function updateCartUI() {
 
 function openCart() {
   const sidebar = document.getElementById('cartSidebar');
+  const overlay = document.getElementById('cartOverlay');
+  const itemsEl = document.getElementById('cartItems');
+
+  if (!sidebar || !overlay || !itemsEl) {
+    return;
+  }
+
   if (sidebar.classList.contains('open')) {
     closeCart();
     return;
   }
+
   updateCartUI();
-  document.getElementById('cartItems').scrollTop = 0;
+  itemsEl.scrollTop = 0;
   sidebar.classList.add('open');
-  document.getElementById('cartOverlay').classList.add('show');
+  overlay.classList.add('show');
   document.body.style.overflow = 'hidden';
 }
 
 function closeCart() {
-  document.getElementById('cartSidebar').classList.remove('open');
-  document.getElementById('cartOverlay').classList.remove('show');
+  const sidebar = document.getElementById('cartSidebar');
+  const overlay = document.getElementById('cartOverlay');
+
+  if (!sidebar || !overlay) {
+    return;
+  }
+
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
   document.body.style.overflow = '';
 }
 
