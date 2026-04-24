@@ -45,7 +45,7 @@ const PRODUCTS = [
 ];
 
 // ===== STATE =====
-let cart = JSON.parse(localStorage.getItem('bhCart') || '[]');
+let cart
 let currentCategory = 'all';
 
 // ===== INIT =====
@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('shopProductsGrid')) renderShopProducts();
   if (document.getElementById('featuredGrid')) renderFeaturedProducts();
   
+  cart = JSON.parse(localStorage.getItem('bhCart') || '[]');
   updateCartUI();
   
   // Initialize sliders/components that exist on the page
@@ -70,6 +71,10 @@ document.addEventListener('DOMContentLoaded', () => {
   
   updateCategoryCounts();
 });
+
+// Cart button event listener
+const cartBtn = document.getElementById('cartBtn');
+if (cartBtn) cartBtn.addEventListener('click', openCart);
 
 // ===== IMAGE MAPPING =====
 function getProductImage(productId) {
@@ -264,7 +269,14 @@ function updateCartUI() {
 }
 
 function openCart() {
-  document.getElementById('cartSidebar').classList.add('open');
+  const sidebar = document.getElementById('cartSidebar');
+  if (sidebar.classList.contains('open')) {
+    closeCart();
+    return;
+  }
+  updateCartUI();
+  document.getElementById('cartItems').scrollTop = 0;
+  sidebar.classList.add('open');
   document.getElementById('cartOverlay').classList.add('show');
   document.body.style.overflow = 'hidden';
 }
@@ -274,8 +286,6 @@ function closeCart() {
   document.getElementById('cartOverlay').classList.remove('show');
   document.body.style.overflow = '';
 }
-
-document.getElementById('cartBtn').addEventListener('click', openCart);
 
 
 // ===== WHATSAPP CHECKOUT =====

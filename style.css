@@ -182,6 +182,8 @@ input, textarea { font-family: var(--font-body); }
   display: flex;
   align-items: center;
   gap: 12px;
+  position: relative;
+  z-index: 1300;
 }
 
 .cart-btn {
@@ -1114,7 +1116,7 @@ input, textarea { font-family: var(--font-body); }
 
 .cart-sidebar {
   position: fixed;
-  top: 0; right: -400px;
+  top: 0; right: -100%;
   width: 380px;
   max-width: 95vw;
   height: 100vh;
